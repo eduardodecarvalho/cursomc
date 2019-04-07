@@ -20,8 +20,8 @@ public class CategoriaResource {
 
 	@Autowired
 	private CategoriaService service;
-	
-	@RequestMapping(value= "/{id}", method = RequestMethod.GET)
+
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	// @PathVaruable serve para jogar o id da URL para a função.
 	public ResponseEntity<?> find(@PathVariable final Integer id) {
 		Optional<Categoria> obj = service.buscar(id);
