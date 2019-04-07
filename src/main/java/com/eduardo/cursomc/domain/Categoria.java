@@ -42,6 +42,7 @@ public class Categoria implements Serializable{
 		this.nome = nome;
 	}
 
+	// faz a comparação de objetos pelo id.
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -50,6 +51,7 @@ public class Categoria implements Serializable{
 		return result;
 	}
 
+	// faz a comparação de objetos pelo id utilizando vários critérios.
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
