@@ -26,7 +26,7 @@ public class CategoriaResource {
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	// @PathVaruable serve para jogar o id da URL para a função.
-	public ResponseEntity<?> find(@PathVariable final Integer id) {
+	public ResponseEntity<Categoria> find(@PathVariable final Integer id) {
 		Categoria obj = service.find(id);
 		return ResponseEntity.ok(obj);
 	}
@@ -37,5 +37,12 @@ public class CategoriaResource {
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
 				.path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).build();
+	}
+	
+	@RequestMapping(value="/{id}", method=RequestMethod.PUT)
+	public ResponseEntity<Void> update(@RequestBody Categoria obj, @PathVariable final Integer id){
+		obj.setId(id);
+		obj = service.update(obj);
+		return ResponseEntity.noContent().build();
 	}
 }

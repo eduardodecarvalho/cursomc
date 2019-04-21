@@ -23,7 +23,7 @@ public class PedidoResource {
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	// @PathVaruable serve para jogar o id da URL para a função.
-	public ResponseEntity<?> find(@PathVariable final Integer id) {
+	public ResponseEntity<Pedido> find(@PathVariable final Integer id) {
 		Pedido obj = service.find(id);
 		return ResponseEntity.ok(obj);
 	}
