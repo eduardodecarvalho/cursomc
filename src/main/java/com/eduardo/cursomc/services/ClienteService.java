@@ -47,7 +47,7 @@ public class ClienteService {
 					"Não é possível pois há entidades relacionadas.");
 		}
 	}
-	
+
 	public List<Cliente> findAll(){
 		return repo.findAll();
 	}
