@@ -16,89 +16,96 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Pedido implements Serializable {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
-	@JsonFormat(pattern="dd/MM/yyyy HH:mm")
-	private Date instante;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+    @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
+    private Date instante;
 
-	@OneToOne(cascade = CascadeType.ALL, mappedBy = "pedido")
-	private Pagamento pagamento;
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "pedido")
+    private Pagamento pagamento;
 
-	@ManyToOne
-	@JoinColumn(name = "cliente_id")
-	private Cliente cliente;
+    @ManyToOne
+    @JoinColumn(name = "cliente_id")
+    private Cliente cliente;
 
-	@ManyToOne
-	@JoinColumn(name = "endereco_de_entrega_id")
-	private Endereco enderecoDeEntrega;
+    @ManyToOne
+    @JoinColumn(name = "endereco_de_entrega_id")
+    private Endereco enderecoDeEntrega;
 
-	@OneToMany(mappedBy = "id.pedido")
-	private Set<ItemPedido> itens = new HashSet<>();
-	
-	public Pedido() {
-	}
+    @OneToMany(mappedBy = "id.pedido")
+    private Set<ItemPedido> itens = new HashSet<>();
 
-	public Pedido(Integer id, Date instante, Cliente cliente, Endereco enderecoDeEntrega) {
-		super();
-		this.id = id;
-		this.instante = instante;
-		this.cliente = cliente;
-		this.enderecoDeEntrega = enderecoDeEntrega;
-	}
+    public Pedido() {
+    }
 
-	public Integer getId() {
-		return id;
-	}
+    public Pedido(Integer id, Date instante, Cliente cliente, Endereco enderecoDeEntrega) {
+        super();
+        this.id = id;
+        this.instante = instante;
+        this.cliente = cliente;
+        this.enderecoDeEntrega = enderecoDeEntrega;
+    }
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    public double getValorPedido() {
+        double soma = 0.0;
+        for (ItemPedido ip : itens) {
+            soma = soma + ip.getSubTotal();
+        }
+        return soma;
+    }
 
-	public Date getInstante() {
-		return instante;
-	}
+    public Integer getId() {
+        return id;
+    }
 
-	public void setInstante(Date instante) {
-		this.instante = instante;
-	}
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-	public Pagamento getPagamento() {
-		return pagamento;
-	}
+    public Date getInstante() {
+        return instante;
+    }
 
-	public void setPagamento(Pagamento pagamento) {
-		this.pagamento = pagamento;
-	}
+    public void setInstante(Date instante) {
+        this.instante = instante;
+    }
 
-	public Cliente getCliente() {
-		return cliente;
-	}
+    public Pagamento getPagamento() {
+        return pagamento;
+    }
 
-	public void setCliente(Cliente cliente) {
-		this.cliente = cliente;
-	}
+    public void setPagamento(Pagamento pagamento) {
+        this.pagamento = pagamento;
+    }
 
-	public Endereco getEnderecoDeEntrega() {
-		return enderecoDeEntrega;
-	}
+    public Cliente getCliente() {
+        return cliente;
+    }
 
-	public void setEnderecoDeEntrega(Endereco enderecoDeEntrega) {
-		this.enderecoDeEntrega = enderecoDeEntrega;
-	}
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
 
-	public Set<ItemPedido> getItens() {
-		return itens;
-	}
+    public Endereco getEnderecoDeEntrega() {
+        return enderecoDeEntrega;
+    }
 
-	public void setItens(Set<ItemPedido> itens) {
-		this.itens = itens;
-	}
+    public void setEnderecoDeEntrega(Endereco enderecoDeEntrega) {
+        this.enderecoDeEntrega = enderecoDeEntrega;
+    }
+
+    public Set<ItemPedido> getItens() {
+        return itens;
+    }
+
+    public void setItens(Set<ItemPedido> itens) {
+        this.itens = itens;
+    }
 
 }
