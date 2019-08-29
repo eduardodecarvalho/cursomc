@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.eduardo.cursomc.domain.Categoria;
 import com.eduardo.cursomc.domain.repositories.CategoriaRepository;
-import com.eduardo.cursomc.dto.CategoriaDTO;
+import com.eduardo.cursomc.dto.Pedido;
 import com.eduardo.cursomc.services.exception.DataIntegrityException;
 import com.eduardo.cursomc.services.exception.ObjectNotFoundException;
 
@@ -63,7 +63,7 @@ public class CategoriaService {
 		return repo.findAll(pageRequest);
 	}
 	
-	public Categoria fromDTO(CategoriaDTO objDTO) {
+	public Categoria fromDTO(Pedido objDTO) {
 		return new Categoria(objDTO.getId(), objDTO.getNome());
 	}
 }
