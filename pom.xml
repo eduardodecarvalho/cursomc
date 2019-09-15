@@ -10,7 +10,7 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.eduardo.cursomc</groupId>
-	<artifactId>workshopmongo</artifactId>
+	<artifactId>cursomc</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>cursomc</name>
 	<description>Estudo de caso Java para curso de modelagem conceitual com UML</description>
