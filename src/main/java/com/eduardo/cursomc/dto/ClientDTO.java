@@ -7,7 +7,7 @@ import javax.validation.constraints.NotEmpty;
 
 import org.hibernate.validator.constraints.Length;
 
-import com.eduardo.cursomc.domain.Cliente;
+import com.eduardo.cursomc.domain.Client;
 import com.eduardo.cursomc.services.validation.ClienteUpdate;
 
 @ClienteUpdate
@@ -27,9 +27,9 @@ public class ClienteDTO implements Serializable {
 	public ClienteDTO() {
 	}
 
-	public ClienteDTO(Cliente obj) {
+	public ClienteDTO(Client obj) {
 		id = obj.getId();
-		nome = obj.getNome();
+		nome = obj.getName();
 		email = obj.getEmail();
 	}
 	

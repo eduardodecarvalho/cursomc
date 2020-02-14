@@ -1,16 +1,10 @@
 package com.eduardo.cursomc.domain;
 
+import javax.persistence.*;
 import java.io.Serializable;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-
 @Entity
-public class Cidade implements Serializable {
+public class City implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -21,17 +15,17 @@ public class Cidade implements Serializable {
 
 	@ManyToOne
 	@JoinColumn(name = "estado_id")
-	private Estado estado;
+	private State state;
 
-	public Cidade() {
+	public City() {
 
 	}
 
-	public Cidade(Integer id, String nome, Estado estado) {
+	public City(Integer id, String nome, State state) {
 		super();
 		this.id = id;
 		this.nome = nome;
-		this.estado = estado;
+		this.state = state;
 	}
 
 	public Integer getId() {
@@ -50,12 +44,12 @@ public class Cidade implements Serializable {
 		this.nome = nome;
 	}
 
-	public Estado getEstado() {
-		return estado;
+	public State getState() {
+		return state;
 	}
 
-	public void setEstado(Estado estado) {
-		this.estado = estado;
+	public void setState(State state) {
+		this.state = state;
 	}
 
 	@Override
@@ -74,7 +68,7 @@ public class Cidade implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Cidade other = (Cidade) obj;
+		City other = (City) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
