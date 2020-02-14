@@ -1,11 +1,5 @@
 package com.eduardo.cursomc.services;
 
-import java.util.Date;
-import java.util.Optional;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.eduardo.cursomc.domain.ItemPedido;
 import com.eduardo.cursomc.domain.PagamentoComBoleto;
 import com.eduardo.cursomc.domain.Pedido;
@@ -14,12 +8,16 @@ import com.eduardo.cursomc.domain.repositories.ItemPedidoRepository;
 import com.eduardo.cursomc.domain.repositories.PagamentoRepository;
 import com.eduardo.cursomc.domain.repositories.PedidoRepository;
 import com.eduardo.cursomc.services.exception.ObjectNotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.Date;
 
 @Service
 public class PedidoService {
 
     @Autowired
-    private PedidoRepository repo;
+    private PedidoRepository pedidoRepository;
 
     @Autowired
     private PagamentoRepository pagamentoRepository;
@@ -40,8 +38,8 @@ public class PedidoService {
     private EmailService emailService;
 
     public Pedido find(Integer id) {
-        Optional<Pedido> obj = repo.findById(id);
-        return obj.orElseThrow(() -> new ObjectNotFoundException(
+        return pedidoRepository.findById(id)
+                .orElseThrow(() -> new ObjectNotFoundException(
                 "Pedido não encontrado! Id: " + id + ", Tipo: " + Pedido.class.getName()));
     }
 
@@ -55,7 +53,7 @@ public class PedidoService {
             PagamentoComBoleto pagto = (PagamentoComBoleto) obj.getPagamento();
             boletoService.preencherPagamentoComBoleto(pagto, obj.getInstante());
         }
-        obj = repo.save(obj);
+        obj = pedidoRepository.save(obj);
         pagamentoRepository.save(obj.getPagamento());
         for (ItemPedido ip : obj.getItens()) {
             ip.setDesconto(0.0);

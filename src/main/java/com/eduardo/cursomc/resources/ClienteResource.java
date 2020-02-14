@@ -32,7 +32,7 @@ public class ClienteResource {
 	public ResponseEntity<Void> update(@Valid @RequestBody ClienteDTO objDTO, @PathVariable final Integer id) {
 		Cliente obj = clienteService.fromDTO(objDTO);
 		obj.setId(id);
-		obj = clienteService.update(obj);
+		clienteService.update(obj);
 		return ResponseEntity.noContent().build();
 	}
 
@@ -45,8 +45,7 @@ public class ClienteResource {
 	@GetMapping
 	public ResponseEntity<List<ClienteDTO>> findAll() {
 		List<Cliente> list = clienteService.findAll();
-		// Método utilizado para trazer apenas o nome e o id das clientes.
-		List<ClienteDTO> listDTO = list.stream().map(obj -> new ClienteDTO(obj)).collect(Collectors.toList());
+		List<ClienteDTO> listDTO = list.stream().map(ClienteDTO::new).collect(Collectors.toList());
 		return ResponseEntity.ok().body(listDTO);
 	}
 
@@ -57,7 +56,7 @@ public class ClienteResource {
 			@RequestParam(value = "orderBy", defaultValue = "nome") String orderBy, 
 			@RequestParam(value = "direction", defaultValue = "ASC") String direction) {
 		Page<Cliente> list = clienteService.findPage(page, linesPerPage, orderBy, direction);
-		Page<ClienteDTO> listDTO = list.map(obj -> new ClienteDTO(obj));
+		Page<ClienteDTO> listDTO = list.map(ClienteDTO::new);
 		return ResponseEntity.ok().body(listDTO);
 	}
 

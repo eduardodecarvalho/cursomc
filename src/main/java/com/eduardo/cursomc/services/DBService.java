@@ -1,34 +1,16 @@
 package com.eduardo.cursomc.services;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Arrays;
-
+import com.eduardo.cursomc.domain.*;
+import com.eduardo.cursomc.domain.enums.EstadoPagamento;
+import com.eduardo.cursomc.domain.enums.TipoCliente;
+import com.eduardo.cursomc.domain.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.eduardo.cursomc.domain.Categoria;
-import com.eduardo.cursomc.domain.Cidade;
-import com.eduardo.cursomc.domain.Cliente;
-import com.eduardo.cursomc.domain.Endereco;
-import com.eduardo.cursomc.domain.Estado;
-import com.eduardo.cursomc.domain.ItemPedido;
-import com.eduardo.cursomc.domain.Pagamento;
-import com.eduardo.cursomc.domain.PagamentoComBoleto;
-import com.eduardo.cursomc.domain.PagamentoComCartao;
-import com.eduardo.cursomc.domain.Pedido;
-import com.eduardo.cursomc.domain.Produto;
-import com.eduardo.cursomc.domain.enums.EstadoPagamento;
-import com.eduardo.cursomc.domain.enums.TipoCliente;
-import com.eduardo.cursomc.domain.repositories.CategoriaRepository;
-import com.eduardo.cursomc.domain.repositories.CidadeRepository;
-import com.eduardo.cursomc.domain.repositories.ClienteRepository;
-import com.eduardo.cursomc.domain.repositories.EnderecoRepository;
-import com.eduardo.cursomc.domain.repositories.EstadoRepository;
-import com.eduardo.cursomc.domain.repositories.ItemPedidoRepository;
-import com.eduardo.cursomc.domain.repositories.PagamentoRepository;
-import com.eduardo.cursomc.domain.repositories.PedidoRepository;
-import com.eduardo.cursomc.domain.repositories.ProdutoRepository;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.Collections;
 
 @Service
 public class DBService {
@@ -152,9 +134,9 @@ public class DBService {
         ped1.getItens().addAll(Arrays.asList(ip1, ip2));
         ped2.getItens().addAll(Arrays.asList(ip3));
 
-        p1.getItens().addAll(Arrays.asList(ip1));
-        p2.getItens().addAll(Arrays.asList(ip3));
-        p3.getItens().addAll(Arrays.asList(ip2));
+        p1.getItens().addAll(Collections.singletonList(ip1));
+        p2.getItens().addAll(Collections.singletonList(ip3));
+        p3.getItens().addAll(Collections.singletonList(ip2));
 
         itemPedidoRepository.saveAll(Arrays.asList(ip1, ip2, ip3));
     }

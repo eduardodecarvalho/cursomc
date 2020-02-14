@@ -39,7 +39,7 @@ public class CategoriaResource {
 	public ResponseEntity<Void> update(@Valid @RequestBody PedidoDTO objDTO, @PathVariable final Integer id) {
 		Categoria obj = categoriaService.fromDTO(objDTO);
 		obj.setId(id);
-		obj = categoriaService.update(obj);
+		categoriaService.update(obj);
 		return ResponseEntity.noContent().build();
 	}
 
@@ -52,7 +52,7 @@ public class CategoriaResource {
 	@GetMapping
 	public ResponseEntity<List<PedidoDTO>> findAll() {
 		List<Categoria> list = categoriaService.findAll();
-		List<PedidoDTO> listDTO = list.stream().map(obj -> new PedidoDTO(obj)).collect(Collectors.toList());
+		List<PedidoDTO> listDTO = list.stream().map(PedidoDTO::new).collect(Collectors.toList());
 		return ResponseEntity.ok().body(listDTO);
 	}
 
@@ -63,7 +63,7 @@ public class CategoriaResource {
 			@RequestParam(value = "orderBy", defaultValue = "nome") String orderBy, 
 			@RequestParam(value = "direction", defaultValue = "ASC") String direction) {
 		Page<Categoria> list = categoriaService.findPage(page, linesPerPage, orderBy, direction);
-		Page<PedidoDTO> listDTO = list.map(obj -> new PedidoDTO(obj));
+		Page<PedidoDTO> listDTO = list.map(PedidoDTO::new);
 		return ResponseEntity.ok().body(listDTO);
 	}
 }

@@ -1,17 +1,5 @@
 package com.eduardo.cursomc.services;
 
-import java.util.List;
-import java.util.Optional;
-
-import javax.transaction.Transactional;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort.Direction;
-import org.springframework.stereotype.Service;
-
 import com.eduardo.cursomc.domain.Cidade;
 import com.eduardo.cursomc.domain.Cliente;
 import com.eduardo.cursomc.domain.Endereco;
@@ -22,6 +10,15 @@ import com.eduardo.cursomc.dto.ClienteDTO;
 import com.eduardo.cursomc.dto.ClienteNewDTO;
 import com.eduardo.cursomc.services.exception.DataIntegrityException;
 import com.eduardo.cursomc.services.exception.ObjectNotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.stereotype.Service;
+
+import javax.transaction.Transactional;
+import java.util.List;
 
 @Service
 public class ClienteService {
@@ -41,8 +38,8 @@ public class ClienteService {
 	}
 	
 	public Cliente find(Integer id) {
-		Optional<Cliente> obj = repo.findById(id);
-		return obj.orElseThrow(() -> new ObjectNotFoundException(
+		return repo.findById(id)
+				.orElseThrow(() -> new ObjectNotFoundException(
 				"Cliente não encontrado! Id: " + id + ", Nome: " + Cliente.class.getName()));
 	}
 	
@@ -95,6 +92,4 @@ public class ClienteService {
 		}
 		return cli;
 	}
-	
-
 }
