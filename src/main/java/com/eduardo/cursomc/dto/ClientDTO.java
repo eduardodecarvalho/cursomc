@@ -15,10 +15,10 @@ public class ClientDTO implements Serializable {
 	
 	private Integer id;
 	
-	@NotEmpty(message="Mandatory.")
+	@NotEmpty(message="Mandatory")
 	@Length(min=5, message="The length must contain between 5 and 80 characters.")
 	private String name;
-	@NotEmpty(message="Mandatory.")
+	@NotEmpty(message="Mandatory")
 	@Email(message="invalid email")
 	private String email;
 

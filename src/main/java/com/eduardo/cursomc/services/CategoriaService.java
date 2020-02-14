@@ -2,7 +2,7 @@ package com.eduardo.cursomc.services;
 
 import com.eduardo.cursomc.domain.Category;
 import com.eduardo.cursomc.domain.repositories.CategoriaRepository;
-import com.eduardo.cursomc.dto.PedidoDTO;
+import com.eduardo.cursomc.dto.OrderDTO;
 import com.eduardo.cursomc.services.exception.DataIntegrityException;
 import com.eduardo.cursomc.services.exception.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,7 +61,7 @@ public class CategoriaService {
 		return categoriaRepository.findAll(pageRequest);
 	}
 	
-	public Category fromDTO(PedidoDTO objDTO) {
+	public Category fromDTO(OrderDTO objDTO) {
 		return new Category(objDTO.getId(), objDTO.getNome());
 	}
 }

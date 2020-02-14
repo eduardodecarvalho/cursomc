@@ -1,7 +1,7 @@
 package com.eduardo.cursomc.resources;
 
 import com.eduardo.cursomc.domain.Category;
-import com.eduardo.cursomc.dto.PedidoDTO;
+import com.eduardo.cursomc.dto.OrderDTO;
 import com.eduardo.cursomc.services.CategoriaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -28,7 +28,7 @@ public class CategoriaResource {
 	}
 
 	@PostMapping
-	public ResponseEntity<Void> insert(@Valid @RequestBody PedidoDTO objDTO) {
+	public ResponseEntity<Void> insert(@Valid @RequestBody OrderDTO objDTO) {
 		Category obj = categoriaService.fromDTO(objDTO);
 		obj = categoriaService.insert(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
@@ -36,7 +36,7 @@ public class CategoriaResource {
 	}
 
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<Void> update(@Valid @RequestBody PedidoDTO objDTO, @PathVariable final Integer id) {
+	public ResponseEntity<Void> update(@Valid @RequestBody OrderDTO objDTO, @PathVariable final Integer id) {
 		Category obj = categoriaService.fromDTO(objDTO);
 		obj.setId(id);
 		categoriaService.update(obj);
@@ -50,20 +50,20 @@ public class CategoriaResource {
 	}
 
 	@GetMapping
-	public ResponseEntity<List<PedidoDTO>> findAll() {
+	public ResponseEntity<List<OrderDTO>> findAll() {
 		List<Category> list = categoriaService.findAll();
-		List<PedidoDTO> listDTO = list.stream().map(PedidoDTO::new).collect(Collectors.toList());
+		List<OrderDTO> listDTO = list.stream().map(OrderDTO::new).collect(Collectors.toList());
 		return ResponseEntity.ok().body(listDTO);
 	}
 
     @GetMapping(value = "/page")
-	public ResponseEntity<Page<PedidoDTO>> findPage(
+	public ResponseEntity<Page<OrderDTO>> findPage(
 			@RequestParam(value = "page", defaultValue = "0") Integer page,
 			@RequestParam(value = "linesPerPage", defaultValue = "24") Integer linesPerPage, 
 			@RequestParam(value = "orderBy", defaultValue = "nome") String orderBy, 
 			@RequestParam(value = "direction", defaultValue = "ASC") String direction) {
 		Page<Category> list = categoriaService.findPage(page, linesPerPage, orderBy, direction);
-		Page<PedidoDTO> listDTO = list.map(PedidoDTO::new);
+		Page<OrderDTO> listDTO = list.map(OrderDTO::new);
 		return ResponseEntity.ok().body(listDTO);
 	}
 }

@@ -12,30 +12,30 @@ public class ClientNewDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @NotEmpty(message = "Preenchimento obrigatório.")
-    @Length(min = 5, message = "O tamanho deve ser entre 5 e 80 caractéries.")
+    @NotEmpty(message = "Mandatory")
+    @Length(min = 5, message = "The length must contain between 5 and 80 characters")
     private String nome;
-    @NotEmpty(message = "Preenchimento obrigatório.")
-    @Email(message = "Email inválido")
+    @NotEmpty(message = "Mandatory")
+    @Email(message = "Invalid email")
     private String email;
-    @NotEmpty(message = "Preenchimento obrigatório.")
-    private String cpfOuCnpj;
-    private Integer tipo;
+    @NotEmpty(message = "Mandatory")
+    private String idOrRegister;
+    private Integer type;
 
-    @NotEmpty(message = "Preenchimento obrigatório.")
-    private String logradouro;
-    private String numero;
-    private String complemento;
-    private String bairro;
-    @NotEmpty(message = "Preenchimento obrigatório.")
+    @NotEmpty(message = "Mandatory")
+    private String street;
+    private String number;
+    private String complement;
+    private String neighborhood;
+    @NotEmpty(message = "Mandatory")
     private String cep;
 
-    @NotEmpty(message = "Preenchimento obrigatório.")
-    private String telefone1;
-    private String telefone2;
-    private String telefone3;
+    @NotEmpty(message = "Mandatory")
+    private String telephone1;
+    private String telephone2;
+    private String telephone3;
 
-    private Integer cidadeId;
+    private Integer cityId;
 
     public ClientNewDTO() {
     }
@@ -56,52 +56,52 @@ public class ClientNewDTO implements Serializable {
         this.email = email;
     }
 
-    public String getCpfOuCnpj() {
-        return cpfOuCnpj;
+    public String getIdOrRegister() {
+        return idOrRegister;
     }
 
-    public void setCpfOuCnpj(String cpfOuCpnj) {
-        this.cpfOuCnpj = cpfOuCpnj;
+    public void setIdOrRegister(String cpfOuCpnj) {
+        this.idOrRegister = cpfOuCpnj;
     }
 
-    public Integer getTipo() {
-        return tipo;
+    public Integer getType() {
+        return type;
     }
 
-    public void setTipo(Integer tipo) {
-        this.tipo = tipo;
+    public void setType(Integer type) {
+        this.type = type;
     }
 
-    public String getLogradouro() {
-        return logradouro;
+    public String getStreet() {
+        return street;
     }
 
-    public void setLogradouro(String logradouro) {
-        this.logradouro = logradouro;
+    public void setStreet(String street) {
+        this.street = street;
     }
 
-    public String getNumero() {
-        return numero;
+    public String getNumber() {
+        return number;
     }
 
-    public void setNumero(String numero) {
-        this.numero = numero;
+    public void setNumber(String number) {
+        this.number = number;
     }
 
-    public String getComplemento() {
-        return complemento;
+    public String getComplement() {
+        return complement;
     }
 
-    public void setComplemento(String complemento) {
-        this.complemento = complemento;
+    public void setComplement(String complement) {
+        this.complement = complement;
     }
 
-    public String getBairro() {
-        return bairro;
+    public String getNeighborhood() {
+        return neighborhood;
     }
 
-    public void setBairro(String bairro) {
-        this.bairro = bairro;
+    public void setNeighborhood(String neighborhood) {
+        this.neighborhood = neighborhood;
     }
 
     public String getCep() {
@@ -112,36 +112,36 @@ public class ClientNewDTO implements Serializable {
         this.cep = cep;
     }
 
-    public String getTelefone1() {
-        return telefone1;
+    public String getTelephone1() {
+        return telephone1;
     }
 
-    public void setTelefone1(String telefone1) {
-        this.telefone1 = telefone1;
+    public void setTelephone1(String telephone1) {
+        this.telephone1 = telephone1;
     }
 
-    public String getTelefone2() {
-        return telefone2;
+    public String getTelephone2() {
+        return telephone2;
     }
 
-    public void setTelefone2(String telefone2) {
-        this.telefone2 = telefone2;
+    public void setTelephone2(String telephone2) {
+        this.telephone2 = telephone2;
     }
 
-    public String getTelefone3() {
-        return telefone3;
+    public String getTelephone3() {
+        return telephone3;
     }
 
-    public void setTelefone3(String telefone3) {
-        this.telefone3 = telefone3;
+    public void setTelephone3(String telephone3) {
+        this.telephone3 = telephone3;
     }
 
-    public Integer getCidadeId() {
-        return cidadeId;
+    public Integer getCityId() {
+        return cityId;
     }
 
-    public void setCidadeId(Integer cidadeId) {
-        this.cidadeId = cidadeId;
+    public void setCityId(Integer cityId) {
+        this.cityId = cityId;
     }
 
 }

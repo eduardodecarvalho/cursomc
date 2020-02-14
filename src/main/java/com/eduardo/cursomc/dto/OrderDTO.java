@@ -1,26 +1,24 @@
 package com.eduardo.cursomc.dto;
 
-import java.io.Serializable;
-
-import javax.validation.constraints.NotEmpty;
-
+import com.eduardo.cursomc.domain.Category;
 import org.hibernate.validator.constraints.Length;
 
-import com.eduardo.cursomc.domain.Category;
+import javax.validation.constraints.NotEmpty;
+import java.io.Serializable;
 
-public class PedidoDTO implements Serializable {
+public class OrderDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	private Integer id;
-	@NotEmpty(message = "Preenchimento obrigatório.")
-	@Length(min = 5, max = 80, message = "Deve ter entre 5 e 80 caracteres.")
+	@NotEmpty(message = "Mandatory")
+	@Length(min = 5, max = 80, message = "The length must contain between 5 and 80 characters")
 	private String nome;
 
-	public PedidoDTO() {
+	public OrderDTO() {
 	}
 
-	public PedidoDTO(Category obj) {
+	public OrderDTO(Category obj) {
 		id = obj.getId();
 		nome = obj.getName();
 	}
