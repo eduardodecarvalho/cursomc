@@ -1,8 +1,8 @@
 package com.eduardo.cursomc.services.validation;
 
-import com.eduardo.cursomc.domain.Cliente;
+import com.eduardo.cursomc.domain.Client;
 import com.eduardo.cursomc.domain.repositories.ClienteRepository;
-import com.eduardo.cursomc.dto.ClienteDTO;
+import com.eduardo.cursomc.dto.ClientDTO;
 import com.eduardo.cursomc.services.exception.FieldMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerMapping;
@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-public class ClienteUpdateValidator implements ConstraintValidator<ClienteUpdate, ClienteDTO> {
+public class ClienteUpdateValidator implements ConstraintValidator<ClienteUpdate, ClientDTO> {
 
 	@Autowired
 	private HttpServletRequest httpServletRequest;
@@ -28,14 +28,14 @@ public class ClienteUpdateValidator implements ConstraintValidator<ClienteUpdate
     }
 
     @Override
-    public boolean isValid(ClienteDTO objDto, ConstraintValidatorContext context) {
+    public boolean isValid(ClientDTO objDto, ConstraintValidatorContext context) {
 
     	Map<String, String> map = (Map<String, String>)
                 httpServletRequest.getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE);
 
         List<FieldMessage> list = new ArrayList<>();
 
-        Optional<Cliente> aux = clienteRepository.findByIsNotIdAndEmail(objDto.getId(), objDto.getEmail());
+        Optional<Client> aux = clienteRepository.findByIsNotIdAndEmail(objDto.getId(), objDto.getEmail());
 
         if (aux.isPresent()) {
             list.add(new FieldMessage("email", "E-mail já existente."));

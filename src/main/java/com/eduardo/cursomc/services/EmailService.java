@@ -2,11 +2,11 @@ package com.eduardo.cursomc.services;
 
 import org.springframework.mail.SimpleMailMessage;
 
-import com.eduardo.cursomc.domain.Pedido;
+import com.eduardo.cursomc.domain.Order;
 
 public interface EmailService {
 
-    void sendOrderConfirmationEmail(Pedido pedido);
+    void sendOrderConfirmationEmail(Order order);
 
     void sendEmail(SimpleMailMessage msg);
 }

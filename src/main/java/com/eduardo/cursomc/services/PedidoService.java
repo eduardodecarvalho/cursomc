@@ -1,9 +1,9 @@
 package com.eduardo.cursomc.services;
 
-import com.eduardo.cursomc.domain.ItemPedido;
-import com.eduardo.cursomc.domain.PagamentoComBoleto;
-import com.eduardo.cursomc.domain.Pedido;
-import com.eduardo.cursomc.domain.enums.EstadoPagamento;
+import com.eduardo.cursomc.domain.OrderedItem;
+import com.eduardo.cursomc.domain.PaymentWithBankSlip;
+import com.eduardo.cursomc.domain.Order;
+import com.eduardo.cursomc.domain.enums.PaymentStatus;
 import com.eduardo.cursomc.domain.repositories.ItemPedidoRepository;
 import com.eduardo.cursomc.domain.repositories.PagamentoRepository;
 import com.eduardo.cursomc.domain.repositories.PedidoRepository;
@@ -37,31 +37,31 @@ public class PedidoService {
     @Autowired
     private EmailService emailService;
 
-    public Pedido find(Integer id) {
+    public Order find(Integer id) {
         return pedidoRepository.findById(id)
                 .orElseThrow(() -> new ObjectNotFoundException(
-                "Pedido não encontrado! Id: " + id + ", Tipo: " + Pedido.class.getName()));
+                "Pedido não encontrado! Id: " + id + ", Tipo: " + Order.class.getName()));
     }
 
-    public Pedido insert(Pedido obj) {
+    public Order insert(Order obj) {
         obj.setId(null);
-        obj.setInstante(new Date());
-        obj.setCliente(clienteService.find(obj.getCliente().getId()));
-        obj.getPagamento().setEstado(EstadoPagamento.PENDENTE);
-        obj.getPagamento().setPedido(obj);
-        if (obj.getPagamento() instanceof PagamentoComBoleto) {
-            PagamentoComBoleto pagto = (PagamentoComBoleto) obj.getPagamento();
-            boletoService.preencherPagamentoComBoleto(pagto, obj.getInstante());
+        obj.setInstant(new Date());
+        obj.setClient(clienteService.find(obj.getClient().getId()));
+        obj.getPayment().setState(PaymentStatus.PENDING);
+        obj.getPayment().setOrder(obj);
+        if (obj.getPayment() instanceof PaymentWithBankSlip) {
+            PaymentWithBankSlip pagto = (PaymentWithBankSlip) obj.getPayment();
+            boletoService.preencherPagamentoComBoleto(pagto, obj.getInstant());
         }
         obj = pedidoRepository.save(obj);
-        pagamentoRepository.save(obj.getPagamento());
-        for (ItemPedido ip : obj.getItens()) {
-            ip.setDesconto(0.0);
-            ip.setProduto(produtoService.find(ip.getProduto().getId()));
-            ip.setPreco(ip.getProduto().getPreco());
-            ip.setPedido(obj);
+        pagamentoRepository.save(obj.getPayment());
+        for (OrderedItem ip : obj.getItems()) {
+            ip.setDiscount(0.0);
+            ip.setProduct(produtoService.find(ip.getProduct().getId()));
+            ip.setPrice(ip.getProduct().getPrice());
+            ip.setOrder(obj);
         }
-        itemPedidoRepository.saveAll(obj.getItens());
+        itemPedidoRepository.saveAll(obj.getItems());
         emailService.sendOrderConfirmationEmail(obj);
         return obj;
     }

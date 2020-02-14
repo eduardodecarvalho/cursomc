@@ -1,9 +1,9 @@
 package com.eduardo.cursomc.services.validation;
 
-import com.eduardo.cursomc.domain.Cliente;
+import com.eduardo.cursomc.domain.Client;
 import com.eduardo.cursomc.domain.enums.TipoCliente;
 import com.eduardo.cursomc.domain.repositories.ClienteRepository;
-import com.eduardo.cursomc.dto.ClienteNewDTO;
+import com.eduardo.cursomc.dto.ClientNewDTO;
 import com.eduardo.cursomc.services.exception.FieldMessage;
 import com.eduardo.cursomc.services.validation.utils.BR;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class ClienteInsertValidator implements ConstraintValidator<ClienteInsert, ClienteNewDTO> {
+public class ClienteInsertValidator implements ConstraintValidator<ClienteInsert, ClientNewDTO> {
 
     @Autowired
     private ClienteRepository clienteRepository;
@@ -24,7 +24,7 @@ public class ClienteInsertValidator implements ConstraintValidator<ClienteInsert
     }
 
     @Override
-    public boolean isValid(ClienteNewDTO objDto, ConstraintValidatorContext context) {
+    public boolean isValid(ClientNewDTO objDto, ConstraintValidatorContext context) {
 
         List<FieldMessage> list = new ArrayList<>();
 
@@ -36,7 +36,7 @@ public class ClienteInsertValidator implements ConstraintValidator<ClienteInsert
             list.add(new FieldMessage("cpfOuCnpj", "CNPJ inválido"));
         }
 
-        Optional<Cliente> aux = clienteRepository.findByEmail(objDto.getEmail());
+        Optional<Client> aux = clienteRepository.findByEmail(objDto.getEmail());
         if (aux.isPresent()) {
             list.add(new FieldMessage("email", "E-mail já existente."));
         }

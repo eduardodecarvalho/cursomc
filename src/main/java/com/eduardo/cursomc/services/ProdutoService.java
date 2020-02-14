@@ -1,7 +1,7 @@
 package com.eduardo.cursomc.services;
 
-import com.eduardo.cursomc.domain.Categoria;
-import com.eduardo.cursomc.domain.Produto;
+import com.eduardo.cursomc.domain.Category;
+import com.eduardo.cursomc.domain.Product;
 import com.eduardo.cursomc.domain.repositories.CategoriaRepository;
 import com.eduardo.cursomc.domain.repositories.ProdutoRepository;
 import com.eduardo.cursomc.services.exception.ObjectNotFoundException;
@@ -21,14 +21,14 @@ public class ProdutoService {
     @Autowired
     private CategoriaRepository categoriaRepository;
 
-    public Produto find(Integer id) {
+    public Product find(Integer id) {
         return repo.findById(id).orElseThrow(() -> new ObjectNotFoundException(
-                "Produto não encontrado! Id: " + id + ", Tipo: " + Produto.class.getName()));
+                "Produto não encontrado! Id: " + id + ", Tipo: " + Product.class.getName()));
     }
 
-    public Page<Produto> search(String nome, List<Integer> ids, Integer page, Integer linesPerPage, String orderBy, String direction) {
+    public Page<Product> search(String nome, List<Integer> ids, Integer page, Integer linesPerPage, String orderBy, String direction) {
         PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
-        List<Categoria> categorias = categoriaRepository.findAllById(ids);
-        return repo.findDistinctByNomeContainingAndCategoriasIn(nome, categorias, pageRequest);
+        List<Category> categories = categoriaRepository.findAllById(ids);
+        return repo.findDistinctByNomeContainingAndCategoriasIn(nome, categories, pageRequest);
     }
 }

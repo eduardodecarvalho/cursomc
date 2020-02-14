@@ -1,13 +1,13 @@
 package com.eduardo.cursomc.services;
 
-import com.eduardo.cursomc.domain.Cidade;
-import com.eduardo.cursomc.domain.Cliente;
-import com.eduardo.cursomc.domain.Endereco;
+import com.eduardo.cursomc.domain.City;
+import com.eduardo.cursomc.domain.Client;
+import com.eduardo.cursomc.domain.Address;
 import com.eduardo.cursomc.domain.enums.TipoCliente;
 import com.eduardo.cursomc.domain.repositories.ClienteRepository;
 import com.eduardo.cursomc.domain.repositories.EnderecoRepository;
-import com.eduardo.cursomc.dto.ClienteDTO;
-import com.eduardo.cursomc.dto.ClienteNewDTO;
+import com.eduardo.cursomc.dto.ClientDTO;
+import com.eduardo.cursomc.dto.ClientNewDTO;
 import com.eduardo.cursomc.services.exception.DataIntegrityException;
 import com.eduardo.cursomc.services.exception.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,27 +30,27 @@ public class ClienteService {
 	private EnderecoRepository enderecoRepository;
 	
 	@Transactional
-	public Cliente insert(Cliente obj) {
+	public Client insert(Client obj) {
 		obj.setId(null);
 		obj = repo.save(obj);
-		enderecoRepository.saveAll(obj.getEnderecos());
+		enderecoRepository.saveAll(obj.getAddresses());
 		return obj;
 	}
 	
-	public Cliente find(Integer id) {
+	public Client find(Integer id) {
 		return repo.findById(id)
 				.orElseThrow(() -> new ObjectNotFoundException(
-				"Cliente não encontrado! Id: " + id + ", Nome: " + Cliente.class.getName()));
+				"Cliente não encontrado! Id: " + id + ", Nome: " + Client.class.getName()));
 	}
 	
-	public Cliente update(Cliente obj) {
-		Cliente newObj = find(obj.getId());
+	public Client update(Client obj) {
+		Client newObj = find(obj.getId());
 		updateData(newObj, obj);
 		return repo.save(newObj);
 	}
 
-	private void updateData(Cliente newObj, Cliente obj) {
-		newObj.setNome(obj.getNome());
+	private void updateData(Client newObj, Client obj) {
+		newObj.setName(obj.getName());
 		newObj.setEmail(obj.getEmail());
 	}
 
@@ -63,32 +63,32 @@ public class ClienteService {
 		}
 	}
 
-	public List<Cliente> findAll(){
+	public List<Client> findAll(){
 		return repo.findAll();
 	}
 	
-	public Page<Cliente> findPage(Integer page, Integer linesPerPage, String orderBy,
-			String direction){
+	public Page<Client> findPage(Integer page, Integer linesPerPage, String orderBy,
+                                 String direction){
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage, 
 				Direction.valueOf(direction), orderBy);
 		return repo.findAll(pageRequest);
 	}
 	
-	public Cliente fromDTO(ClienteDTO objDTO) {
-		return new Cliente(objDTO.getId(), objDTO.getNome(), objDTO.getEmail(), null, null);
+	public Client fromDTO(ClientDTO objDTO) {
+		return new Client(objDTO.getId(), objDTO.getName(), objDTO.getEmail(), null, null);
 	}
 	
-	public Cliente fromDTO(ClienteNewDTO objDto) {
-		Cliente cli = new Cliente(null, objDto.getNome(), objDto.getEmail(), objDto.getCpfOuCnpj(), TipoCliente.toEnum(objDto.getTipo()));
-		Cidade cid = new Cidade(objDto.getCidadeId(), null, null);
-		Endereco end = new Endereco(null, objDto.getLogradouro(), objDto.getNumero(), objDto.getComplemento(), objDto.getBairro(), objDto.getCep(), cli, cid);
-		cli.getEnderecos().add(end);
-		cli.getTelefones().add(objDto.getTelefone1());
+	public Client fromDTO(ClientNewDTO objDto) {
+		Client cli = new Client(null, objDto.getNome(), objDto.getEmail(), objDto.getCpfOuCnpj(), TipoCliente.toEnum(objDto.getTipo()));
+		City cid = new City(objDto.getCidadeId(), null, null);
+		Address end = new Address(null, objDto.getLogradouro(), objDto.getNumero(), objDto.getComplemento(), objDto.getBairro(), objDto.getCep(), cli, cid);
+		cli.getAddresses().add(end);
+		cli.getTelephones().add(objDto.getTelefone1());
 		if (objDto.getTelefone2()!=null) {
-			cli.getTelefones().add(objDto.getTelefone2());
+			cli.getTelephones().add(objDto.getTelefone2());
 		}
 		if (objDto.getTelefone3()!=null) {
-			cli.getTelefones().add(objDto.getTelefone3());
+			cli.getTelephones().add(objDto.getTelefone3());
 		}
 		return cli;
 	}

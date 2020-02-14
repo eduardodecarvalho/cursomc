@@ -4,8 +4,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 
-import com.eduardo.cursomc.domain.PagamentoComBoleto;
-import com.eduardo.cursomc.domain.PagamentoComCartao;
+import com.eduardo.cursomc.domain.PaymentWithBankSlip;
+import com.eduardo.cursomc.domain.PaymentWithCreditCard;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Configuration
@@ -15,8 +15,8 @@ public class JacksonConfig {
         return new Jackson2ObjectMapperBuilder() {
             @Override
             public void configure(ObjectMapper objectMapper) {
-                objectMapper.registerSubtypes(PagamentoComCartao.class);
-                objectMapper.registerSubtypes(PagamentoComBoleto.class);
+                objectMapper.registerSubtypes(PaymentWithCreditCard.class);
+                objectMapper.registerSubtypes(PaymentWithBankSlip.class);
                 super.configure(objectMapper);
             }
         };

@@ -8,7 +8,7 @@ import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 
 @ClienteInsert
-public class ClienteNewDTO implements Serializable {
+public class ClientNewDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -37,7 +37,7 @@ public class ClienteNewDTO implements Serializable {
 
     private Integer cidadeId;
 
-    public ClienteNewDTO() {
+    public ClientNewDTO() {
     }
 
     public String getNome() {

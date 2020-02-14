@@ -1,6 +1,6 @@
 package com.eduardo.cursomc.resources;
 
-import com.eduardo.cursomc.domain.Produto;
+import com.eduardo.cursomc.domain.Product;
 import com.eduardo.cursomc.dto.ProdutoDTO;
 import com.eduardo.cursomc.resources.utils.URL;
 import com.eduardo.cursomc.services.ProdutoService;
@@ -19,8 +19,8 @@ public class ProdutoResource {
     private ProdutoService produtoService;
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<Produto> find(@PathVariable Integer id) {
-        Produto obj = produtoService.find(id);
+    public ResponseEntity<Product> find(@PathVariable Integer id) {
+        Product obj = produtoService.find(id);
         return ResponseEntity.ok().body(obj);
     }
 
@@ -34,7 +34,7 @@ public class ProdutoResource {
             @RequestParam(value = "direction", defaultValue = "ASC") String direction) {
         String nomeDecoded = URL.decodeParam(nome);
         List<Integer> ids = URL.decodeIntList(categorias);
-        Page<Produto> list = produtoService.search(nomeDecoded, ids, page, linesPerPage, orderBy, direction);
+        Page<Product> list = produtoService.search(nomeDecoded, ids, page, linesPerPage, orderBy, direction);
         Page<ProdutoDTO> listDto = list.map(ProdutoDTO::new);
         return ResponseEntity.ok().body(listDto);
     }

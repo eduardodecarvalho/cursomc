@@ -1,6 +1,6 @@
 package com.eduardo.cursomc.services;
 
-import com.eduardo.cursomc.domain.Categoria;
+import com.eduardo.cursomc.domain.Category;
 import com.eduardo.cursomc.domain.repositories.CategoriaRepository;
 import com.eduardo.cursomc.dto.PedidoDTO;
 import com.eduardo.cursomc.services.exception.DataIntegrityException;
@@ -20,25 +20,25 @@ public class CategoriaService {
 	@Autowired
 	private CategoriaRepository categoriaRepository;
 
-	public Categoria find(Integer id) {
+	public Category find(Integer id) {
 		return categoriaRepository.findById(id)
 				.orElseThrow(() -> new ObjectNotFoundException(
-				"Objeto não encontrado! Id: " + id + ", Tipo: " + Categoria.class.getName()));
+				"Objeto não encontrado! Id: " + id + ", Tipo: " + Category.class.getName()));
 	}
 
-	public Categoria insert(Categoria obj) {
+	public Category insert(Category obj) {
 		obj.setId(null);
 		return categoriaRepository.save(obj);
 	}
 
-	public Categoria update(Categoria obj) {
-		Categoria newObj = find(obj.getId());
+	public Category update(Category obj) {
+		Category newObj = find(obj.getId());
 		updateData(newObj, obj);
 		return categoriaRepository.save(newObj);
 	}
 
-	private void updateData(Categoria newObj, Categoria obj) {
-		newObj.setNome(obj.getNome());
+	private void updateData(Category newObj, Category obj) {
+		newObj.setName(obj.getName());
 	}
 
 	public void delete(Integer id) {
@@ -50,18 +50,18 @@ public class CategoriaService {
 		}
 	}
 	
-	public List<Categoria> findAll(){
+	public List<Category> findAll(){
 		return categoriaRepository.findAll();
 	}
 	
-	public Page<Categoria> findPage(Integer page, Integer linesPerPage, String orderBy,
-			String direction){
+	public Page<Category> findPage(Integer page, Integer linesPerPage, String orderBy,
+                                   String direction){
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage, 
 				Direction.valueOf(direction), orderBy);
 		return categoriaRepository.findAll(pageRequest);
 	}
 	
-	public Categoria fromDTO(PedidoDTO objDTO) {
-		return new Categoria(objDTO.getId(), objDTO.getNome());
+	public Category fromDTO(PedidoDTO objDTO) {
+		return new Category(objDTO.getId(), objDTO.getNome());
 	}
 }

@@ -6,7 +6,7 @@ import javax.validation.constraints.NotEmpty;
 
 import org.hibernate.validator.constraints.Length;
 
-import com.eduardo.cursomc.domain.Categoria;
+import com.eduardo.cursomc.domain.Category;
 
 public class PedidoDTO implements Serializable {
 
@@ -20,9 +20,9 @@ public class PedidoDTO implements Serializable {
 	public PedidoDTO() {
 	}
 
-	public PedidoDTO(Categoria obj) {
+	public PedidoDTO(Category obj) {
 		id = obj.getId();
-		nome = obj.getNome();
+		nome = obj.getName();
 	}
 
 	public Integer getId() {

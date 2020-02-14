@@ -1,8 +1,8 @@
 package com.eduardo.cursomc.resources;
 
-import com.eduardo.cursomc.domain.Cliente;
-import com.eduardo.cursomc.dto.ClienteDTO;
-import com.eduardo.cursomc.dto.ClienteNewDTO;
+import com.eduardo.cursomc.domain.Client;
+import com.eduardo.cursomc.dto.ClientDTO;
+import com.eduardo.cursomc.dto.ClientNewDTO;
 import com.eduardo.cursomc.services.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -23,14 +23,14 @@ public class ClienteResource {
 	private ClienteService clienteService;
 
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<Cliente> find(@PathVariable final Integer id) {
-		Cliente obj = clienteService.find(id);
+	public ResponseEntity<Client> find(@PathVariable final Integer id) {
+		Client obj = clienteService.find(id);
 		return ResponseEntity.ok(obj);
 	}
 	
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<Void> update(@Valid @RequestBody ClienteDTO objDTO, @PathVariable final Integer id) {
-		Cliente obj = clienteService.fromDTO(objDTO);
+	public ResponseEntity<Void> update(@Valid @RequestBody ClientDTO objDTO, @PathVariable final Integer id) {
+		Client obj = clienteService.fromDTO(objDTO);
 		obj.setId(id);
 		clienteService.update(obj);
 		return ResponseEntity.noContent().build();
@@ -43,26 +43,26 @@ public class ClienteResource {
 	}
 
 	@GetMapping
-	public ResponseEntity<List<ClienteDTO>> findAll() {
-		List<Cliente> list = clienteService.findAll();
-		List<ClienteDTO> listDTO = list.stream().map(ClienteDTO::new).collect(Collectors.toList());
+	public ResponseEntity<List<ClientDTO>> findAll() {
+		List<Client> list = clienteService.findAll();
+		List<ClientDTO> listDTO = list.stream().map(ClientDTO::new).collect(Collectors.toList());
 		return ResponseEntity.ok().body(listDTO);
 	}
 
 	@GetMapping(value = "/page")
-	public ResponseEntity<Page<ClienteDTO>> findPage(
+	public ResponseEntity<Page<ClientDTO>> findPage(
 			@RequestParam(value = "page", defaultValue = "0") Integer page,
 			@RequestParam(value = "linesPerPage", defaultValue = "24") Integer linesPerPage, 
 			@RequestParam(value = "orderBy", defaultValue = "nome") String orderBy, 
 			@RequestParam(value = "direction", defaultValue = "ASC") String direction) {
-		Page<Cliente> list = clienteService.findPage(page, linesPerPage, orderBy, direction);
-		Page<ClienteDTO> listDTO = list.map(ClienteDTO::new);
+		Page<Client> list = clienteService.findPage(page, linesPerPage, orderBy, direction);
+		Page<ClientDTO> listDTO = list.map(ClientDTO::new);
 		return ResponseEntity.ok().body(listDTO);
 	}
 
 	@PostMapping
-	public ResponseEntity<Void> insert(@Valid @RequestBody ClienteNewDTO objDTO) {
-		Cliente obj = clienteService.fromDTO(objDTO);
+	public ResponseEntity<Void> insert(@Valid @RequestBody ClientNewDTO objDTO) {
+		Client obj = clienteService.fromDTO(objDTO);
 		obj = clienteService.insert(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).build();
