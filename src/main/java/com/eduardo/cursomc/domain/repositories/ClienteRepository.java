@@ -1,11 +1,14 @@
 package com.eduardo.cursomc.domain.repositories;
 
-import com.eduardo.cursomc.domain.Client;
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
+import com.eduardo.cursomc.domain.Client;
 
 @Repository
 public interface ClienteRepository extends JpaRepository<Client, Integer> {
@@ -14,5 +17,9 @@ public interface ClienteRepository extends JpaRepository<Client, Integer> {
     Optional<Client> findByEmail(String email);
 
     @Transactional(readOnly = true)
-    Optional<Client> findByIsNotIdAndEmail(Integer id, String email);
+    @Query(value = "SELECT * FROM client c "
+            + "WHERE c.id != :id "
+            + "AND c.email = :email; ", nativeQuery = true)
+    Optional<Client> findByIsNotIdAndEmail(@Param(value = "id") Integer id, @Param(value = "email") String email);
+
 }
